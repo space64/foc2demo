@@ -66,7 +66,7 @@ public class BT2T2 extends JFrame implements ActionListener {
 			btnTmp.setBorderPainted(false);
 			btnTmp.addActionListener(this);
 			btnTmp.setMargin(ins);
-			btnTmp.setActionCommand(i + "");
+			//btnTmp.setActionCommand(i + "");
 			if ((i / N + i % N) % 2 == 1) {
 				btnTmp.setBackground(Color.BLACK);
 			} else {
@@ -106,7 +106,7 @@ public class BT2T2 extends JFrame implements ActionListener {
 		}
 
 		public void setPaintCircle(boolean b) {
-			paintCircle = false;
+			paintCircle = b;
 			repaint();
 		}
 

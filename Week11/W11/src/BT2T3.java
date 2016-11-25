@@ -74,7 +74,7 @@ public class BT2T3 extends JFrame implements ActionListener {
 			btnTmp.setBorderPainted(false);
 			btnTmp.addActionListener(this);
 			btnTmp.setMargin(ins);
-			btnTmp.setActionCommand(i + "");
+			//btnTmp.setActionCommand(i + "");
 
 			pan.add(btnTmp);
 		}
