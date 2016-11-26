@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -71,7 +72,8 @@ public class BT2T3 extends JFrame implements ActionListener {
 				btnTmp.setContentAreaFilled(false);
 			}
 
-			btnTmp.setBorderPainted(false);
+			//btnTmp.setBorderPainted(false);
+			btnTmp.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 			btnTmp.setMargin(ins);
 			btnTmp.addActionListener(this);
 			//btnTmp.setActionCommand(i + "");
