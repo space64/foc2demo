@@ -41,6 +41,7 @@ public class BT2T3 extends JFrame implements ActionListener {
 			while (scn.hasNextInt()) {
 				numberArray[count++] = scn.nextInt();
 			}
+			scn.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -72,8 +73,8 @@ public class BT2T3 extends JFrame implements ActionListener {
 			}
 
 			btnTmp.setBorderPainted(false);
-			btnTmp.addActionListener(this);
 			btnTmp.setMargin(ins);
+			btnTmp.addActionListener(this);
 			//btnTmp.setActionCommand(i + "");
 
 			pan.add(btnTmp);

@@ -41,6 +41,7 @@ public class BT2T2 extends JFrame implements ActionListener {
 			while (scn.hasNextInt()) {
 				numberArray[count++] = scn.nextInt();
 			}
+			scn.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
