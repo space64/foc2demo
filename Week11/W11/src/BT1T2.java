@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import java.util.Scanner;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -32,6 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Huyen
  *
  */
+@SuppressWarnings("serial")
 public class BT1T2 extends JFrame {
 	JMenuBar mnbBar;
 	JMenu mnuFile, mnuFormat;

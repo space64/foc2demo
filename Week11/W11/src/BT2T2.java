@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -14,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class BT2T2 extends JFrame implements ActionListener {
 	int N = 9;
 	int SIZE = 75;
@@ -95,6 +95,7 @@ public class BT2T2 extends JFrame implements ActionListener {
 			color = Color.RED;
 		}
 
+		@SuppressWarnings("unused")
 		public MyButton(String name) {
 			super(name);
 			color = Color.RED;
@@ -106,6 +107,7 @@ public class BT2T2 extends JFrame implements ActionListener {
 			repaint();
 		}
 
+		@SuppressWarnings("unused")
 		public void setPaintCircle(boolean b) {
 			paintCircle = b;
 			repaint();

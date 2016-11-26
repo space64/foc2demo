@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import java.util.Scanner;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -32,6 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Huyen
  *
  */
+@SuppressWarnings("serial")
 public class BT1T1 extends JFrame {
 	JMenuBar mnbBar;
 	JMenu mnuFile, mnuFormat;
@@ -177,9 +176,6 @@ public class BT1T1 extends JFrame {
 				currentFile = fchOpenFile.getSelectedFile();
 				setTitle(currentFile.getName());
 				Scanner scn = new Scanner(new FileReader(fchOpenFile.getSelectedFile()));
-				// Đọc từng dòng. Nếu còn dòng nữa thì tiến hành đọc dòng tiếp.
-				// Nếu không còn dòng nào nữa thì dừng.
-				StringBuilder builder = new StringBuilder();
 				int counter = 0;
 				while (scn.hasNextLine()) {
 					// Đọc dòng tiếp theo vào nối thêm vào textarea
