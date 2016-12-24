@@ -1,3 +1,4 @@
+package w11;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -73,7 +74,7 @@ public class BT2T3 extends JFrame implements ActionListener {
 			}
 
 			//btnTmp.setBorderPainted(false);
-			btnTmp.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+			btnTmp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			btnTmp.setMargin(ins);
 			btnTmp.addActionListener(this);
 			//btnTmp.setActionCommand(i + "");

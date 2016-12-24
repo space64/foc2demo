@@ -1,3 +1,5 @@
+package w12;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -25,13 +29,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
 /**
  * @author Huyen
  *
  */
 @SuppressWarnings("serial")
-public class BT1T2 extends JFrame {
+public class BT1T1 extends JFrame {
 	JMenuBar mnbBar;
 	JMenu mnuFile, mnuFormat;
 	JMenuItem mniNew, mniOpen, mniSave, mniSaveAs, mniExit, mniChangeBgColor, mniChangeFontColor;
@@ -46,10 +51,12 @@ public class BT1T2 extends JFrame {
 	JFileChooser fchOpenFile;
 	File currentFile;
 
+	LinkedList<HighScore> hcList = new LinkedList<>();
+
 	/**
 	 * Hàm dựng, được gọi khi tạo đối tượng của class này.
 	 */
-	public BT1T2() {
+	public BT1T1() {
 		setTitle("Text Editor");
 		setPreferredSize(new Dimension(600, 500));
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -67,6 +74,7 @@ public class BT1T2 extends JFrame {
 		txaContent.setWrapStyleWord(true);
 		// Dùng JScrollPane để nếu văn bản dài sẽ xuất hiện thanh cuộn
 		scrPane = new JScrollPane(txaContent);
+		txaContent.setEditable(false);
 		// Thêm JScrollPane (chứa JTextArea) vào Frame
 		getContentPane().add(scrPane);
 
@@ -97,6 +105,30 @@ public class BT1T2 extends JFrame {
 				} else if (e.getSource() == mniChangeFontColor) {
 					// Xử lý khi nhấn menu Change Font Color
 					changeFontColor();
+				} else if (e.getSource() == mniNew) {
+					// Xử lý khi nhấn menu Change Font Color
+					String input = JOptionPane.showInputDialog(BT1T1.this, "Input your score using format: score|name");
+					String[] data = input.split("\\|");
+					int score = Integer.parseInt(data[0]);
+					String name = data[1];
+					HighScore hs = new HighScore(score, name);
+					int count = 0;
+					for (Iterator iterator = hcList.iterator(); iterator.hasNext();) {
+						HighScore highScore = (HighScore) iterator.next();
+						if (hs.getScore() > highScore.getScore()) {
+							hcList.add(count, hs);
+							if (hcList.size() > 10) {
+								hcList.removeLast();
+							}
+							showHighScore();
+							JOptionPane.showMessageDialog(BT1T1.this, "New Highscore. Your rank:"+(count+1));
+							break;
+						}
+						count++;
+					}
+					if(count>=hcList.size()){
+						JOptionPane.showMessageDialog(BT1T1.this, "No Update High Score");
+					}
 				}
 			}
 		};
@@ -130,7 +162,7 @@ public class BT1T2 extends JFrame {
 		mnuFile = new JMenu("File");
 		mnuFile.setMnemonic('f');
 		mnuFormat = new JMenu("Format");
-		mniNew = new JMenuItem("New Window");
+		mniNew = new JMenuItem("New Highscore");
 		mniOpen = new JMenuItem("Open");
 		mniOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		mniOpen.setMnemonic('o');
@@ -176,23 +208,41 @@ public class BT1T2 extends JFrame {
 				currentFile = fchOpenFile.getSelectedFile();
 				setTitle(currentFile.getName());
 				Scanner scn = new Scanner(new FileReader(fchOpenFile.getSelectedFile()));
-				// Đọc từng dòng. Nếu còn dòng nữa thì tiến hành đọc dòng tiếp.
-				// Nếu không còn dòng nào nữa thì dừng.
 				int counter = 0;
 				while (scn.hasNextLine()) {
 					// Đọc dòng tiếp theo vào nối thêm vào textarea
-					String s = scn.nextLine();
-					counter++;
-					if (s.contains("-")) {
-						txaContent.insert("Line " + counter + ": " + s + "\r\n", 0);
+					String line = scn.nextLine();
+					String[] data = line.split("\\|");
+					if (data.length == 2) {
+						int score = Integer.parseInt(data[0]);
+						String name = data[1];
+						HighScore hs = new HighScore(score, name);
+						hcList.add(hs);
+						counter++;
 					}
 				}
+				showHighScore();
+				// txaContent.setText(builder.toString());
 				txaContent.setCaretPosition(0);
 				scn.close();
 			} catch (FileNotFoundException e) {
 				// Hiện thông báo khi không tìm thấy tập tin
 				JOptionPane.showMessageDialog(null, "Selected file is not found");
 			}
+		}
+	}
+
+	private void showHighScore() {
+		txaContent.setText("");
+		int count = 0;
+		txaContent.append(String.format("%-10s %20s\t%5s\r\n", "STT", "Ten", "Diem"));
+		for (Iterator iterator = hcList.iterator(); iterator.hasNext();) {
+			HighScore highScore = (HighScore) iterator.next();
+			count++;
+
+			txaContent.append(
+					String.format("%-10s %-20s\t%5s\r\n", count, highScore.getUserName(), highScore.getScore()));
+
 		}
 	}
 
@@ -255,8 +305,36 @@ public class BT1T2 extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		BT1T2 f = new BT1T2();
+		BT1T1 f = new BT1T1();
 		f.setVisible(true);
+
+	}
+
+	private class HighScore {
+		private int score;
+		private String userName;
+
+		public HighScore(int score, String userName) {
+			super();
+			this.score = score;
+			this.userName = userName;
+		}
+
+		public int getScore() {
+			return score;
+		}
+
+		public void setScore(int score) {
+			this.score = score;
+		}
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
 
 	}
 
